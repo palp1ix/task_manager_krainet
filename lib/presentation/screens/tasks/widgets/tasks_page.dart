@@ -1,9 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
-import 'package:task_manager_krainet/core/router/router.gr.dart';
+import 'package:task_manager_krainet/presentation/screens/tasks/widgets/add_new_task_button.dart';
 
 class TasksPage extends StatelessWidget {
   const TasksPage({super.key});
@@ -23,25 +21,14 @@ class TasksPage extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              BackButton(),
+              SizedBox(width: 5),
               Text(categoryName,
                   style: theme.textTheme.bodyLarge?.copyWith(fontSize: 24)),
               Spacer(),
-              IconButton(
-                icon: SvgPicture.asset(
-                  'assets/icons/plus.svg',
-                  // White color constantly in both themes
-                  colorFilter: ColorFilter.mode(Colors.white, BlendMode.srcIn),
-                  width: 30,
-                  height: 30,
-                ),
-                style: IconButton.styleFrom(
-                  backgroundColor: theme.primaryColor,
-                ),
-                onPressed: () {
-                  context.router.push(AddTaskRoute());
-                },
-              )
+              AddNewTaskButton()
             ],
           ),
         )

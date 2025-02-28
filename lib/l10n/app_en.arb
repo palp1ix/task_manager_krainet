@@ -129,5 +129,13 @@
     "addNewTask": "Add New Task",
     "@addNewTask": {
         "description": "Title for add new task screen"
+    },
+    "createTask": "Create Task",
+    "dueDate": "Due Date",
+    "description": "Description",
+    "title": "Title",
+    "enterText": "Please, enter a value",
+    "@enterText": {
+        "description": "Text if field for input is empry"
     }
 }

@@ -1,6 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_manager_krainet/core/constants/constants.dart';
+import 'package:task_manager_krainet/shared/widgets/decorated_button.dart';
+import 'package:task_manager_krainet/shared/widgets/decorated_text_form_field.dart';
+import 'package:task_manager_krainet/shared/widgets/tap_outside_to_unfocus.dart';
 
 @RoutePage()
 class AddTaskScreen extends StatefulWidget {
@@ -23,13 +28,94 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     super.dispose();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+
+    return TapOutsideToUnfocus(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(localization.addNewTask),
+          centerTitle: true,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            // For keyboard adaptivity
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Title input
+                  DecoratedTextFormField(
+                      controller: _titleController,
+                      labelText: localization.title),
+                  const SizedBox(height: 16),
+
+                  // Description input
+                  DecoratedTextFormField(
+                    controller: _descriptionController,
+                    labelText: localization.description,
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Date Input
+                  InkWell(
+                    onTap: () => _selectDate(context),
+                    child: InputDecorator(
+                      decoration: InputDecoration(
+                        labelText: localization.dueDate,
+                        border: OutlineInputBorder().copyWith(
+                            borderRadius: BorderRadius.circular(
+                                AppConstants.inputBorderRadius)),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            DateFormat('MM dd').format(_selectedDate),
+                          ),
+                          const Icon(Icons.calendar_today),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  //Submit button
+                  DecoratedButton(
+                    onPressed: () {
+                      _submitForm();
+                    },
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Text(
+                      localization.createTask,
+                      style: theme.textTheme.bodyLarge
+                          ?.copyWith(color: theme.colorScheme.surface),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Function for select date
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime(2100),
+      lastDate: DateTime(AppConstants.lastYearRange),
     );
+
+    // Also validating
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
@@ -37,6 +123,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
+  // Final after validating we submit form and push event to bloc
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
       // TODO: Logic here
@@ -48,79 +135,5 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
       debugPrint('Task created: $taskData');
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Task'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                TextFormField(
-                  controller: _titleController,
-                  decoration: const InputDecoration(
-                    labelText: 'Title',
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a title';
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _descriptionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Description',
-                    border: OutlineInputBorder(),
-                  ),
-                  maxLines: 3,
-                ),
-                const SizedBox(height: 16),
-                InkWell(
-                  onTap: () => _selectDate(context),
-                  child: InputDecorator(
-                    decoration: const InputDecoration(
-                      labelText: 'Due Date',
-                      border: OutlineInputBorder(),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          DateFormat('yyyy-MM-dd').format(_selectedDate),
-                        ),
-                        const Icon(Icons.calendar_today),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _submitForm,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  child: const Text(
-                    'Create Task',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
   }
 }

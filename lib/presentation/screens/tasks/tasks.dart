@@ -14,7 +14,6 @@ class TasksScreen extends StatelessWidget {
     return Provider<String>.value(
         value: categoryName,
         child: Scaffold(
-          appBar: AppBar(), // empty appbar for back arrow button
           body: TasksPage(),
         ));
   }

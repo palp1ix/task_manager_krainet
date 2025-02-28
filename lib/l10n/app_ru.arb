@@ -48,5 +48,10 @@
     "pleaseConfirmPassword": "Пожалуйста, подтвердите ваш пароль",
     "passwordsDoNotMatch": "Пароли не совпадают",
     "haveAccount": "Уже есть аккаунт?",
-    "addNewTask": "Добавить новую задачу"
+    "addNewTask": "Добавить новую задачу",
+    "createTask": "Создать задачу",
+    "dueDate": "Дата",
+    "description": "Описание",
+    "title": "Название",
+    "enterText": "Пожалуйста, введите значение"
 }
