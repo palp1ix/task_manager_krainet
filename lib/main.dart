@@ -16,7 +16,6 @@ void main() async {
 
 class MainApp extends StatelessWidget {
   MainApp({super.key});
-
   // Initialize router
   final _appRouter = AppRouter();
 

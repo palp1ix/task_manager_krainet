@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_krainet/shared/widgets/decorated_button.dart';
 import 'package:task_manager_krainet/shared/widgets/tap_outside_to_unfocus.dart';
