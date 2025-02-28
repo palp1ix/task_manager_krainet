@@ -7,13 +7,23 @@ class DecoratedTextFormField extends StatelessWidget {
       {super.key,
       required this.controller,
       this.maxLines,
-      required this.labelText,
-      this.validator});
+      this.labelText,
+      this.validator,
+      this.keyboardType,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.hintText,
+      this.obscureText = false});
 
   final TextEditingController controller;
-  final String labelText;
+  final String? labelText;
+  final String? hintText;
   final int? maxLines;
-  final String Function(String?)? validator;
+  final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +31,13 @@ class DecoratedTextFormField extends StatelessWidget {
 
     return TextFormField(
       controller: controller,
+      keyboardType: keyboardType,
+      obscureText: obscureText,
       decoration: InputDecoration(
           labelText: labelText,
+          hintText: hintText,
+          prefixIcon: prefixIcon,
+          suffixIcon: suffixIcon,
           border: OutlineInputBorder().copyWith(
               borderRadius:
                   BorderRadius.circular(AppConstants.inputBorderRadius))),

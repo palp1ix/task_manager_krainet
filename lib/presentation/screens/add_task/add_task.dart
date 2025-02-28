@@ -37,6 +37,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(localization.addNewTask),
+          surfaceTintColor: Colors.transparent,
+          backgroundColor: Colors.transparent,
           centerTitle: true,
         ),
         body: Padding(

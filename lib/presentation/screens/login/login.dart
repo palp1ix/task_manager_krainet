@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
 import 'package:task_manager_krainet/core/router/router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_manager_krainet/shared/widgets/decorated_text_form_field.dart';
+import 'package:task_manager_krainet/shared/widgets/base_auth_page.dart';
 
 @RoutePage()
 class LoginScreen extends StatefulWidget {
@@ -36,115 +38,72 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
     
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(localization.loginTitle),
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  localization.welcomeBack,
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  localization.loginAccessAccount,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 32),
-                TextFormField(
-                  controller: _emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    labelText: localization.email,
-                    hintText: localization.enterEmail,
-                    prefixIcon: Icon(Icons.email),
-                    border: OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return localization.pleaseEnterEmail;
-                    }
-                    if (!RegExp(AppConstants.notValidEmailSymbols)
-                        .hasMatch(value)) {
-                      return localization.pleaseEnterValidEmail;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: !_isPasswordVisible,
-                  decoration: InputDecoration(
-                    labelText: localization.password,
-                    hintText: localization.enterPassword,
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _isPasswordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                    ),
-                    border: const OutlineInputBorder(),
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return localization.pleaseEnterPassword;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _handleLogin,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  child: Text(
-                    localization.loginButton,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(localization.noAccount),
-                    TextButton(
-                      onPressed: () {
-                        context.router.replace(SignupRoute());
-                      },
-                      child: Text(localization.signUp),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+    // Define form fields that are specific to login screen
+    final formFields = [
+      TextFormField(
+        controller: _emailController,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          labelText: localization.email,
+          hintText: localization.enterEmail,
+          prefixIcon: Icon(Icons.email),
+          border: OutlineInputBorder().copyWith(
+              borderRadius: BorderRadius.circular(
+                  AppConstants.inputBorderRadius)),
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return localization.pleaseEnterEmail;
+          }
+          if (!RegExp(AppConstants.notValidEmailSymbols)
+              .hasMatch(value)) {
+            return localization.pleaseEnterValidEmail;
+          }
+          return null;
+        },
       ),
+      const SizedBox(height: 16),
+      DecoratedTextFormField(
+        controller: _passwordController,
+        obscureText: !_isPasswordVisible,
+        labelText: localization.password,
+        hintText: localization.enterPassword,
+        prefixIcon: const Icon(Icons.lock),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _isPasswordVisible
+                ? Icons.visibility
+                : Icons.visibility_off,
+          ),
+          onPressed: () {
+            setState(() {
+              _isPasswordVisible = !_isPasswordVisible;
+            });
+          },
+        ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return localization.pleaseEnterPassword;
+          }
+          return null;
+        },
+      ),
+    ];
+
+    // Use the BaseAuthPage widget with login-specific parameters
+    return BaseAuthPage(
+      formKey: _formKey,
+      appBarTitle: localization.loginTitle,
+      title: localization.welcomeBack,
+      subtitle: localization.loginAccessAccount,
+      primaryButtonText: localization.loginButton,
+      onPrimaryButtonPressed: _handleLogin,
+      alternativeActionMessage: localization.noAccount,
+      alternativeActionText: localization.signUp,
+      onAlternativeActionPressed: () {
+        context.router.replace(SignupRoute());
+      },
+      formFields: formFields,
     );
   }
 }
