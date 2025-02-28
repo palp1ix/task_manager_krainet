@@ -10,6 +10,17 @@ dependencies:
   flutter:
     sdk: flutter
   auto_route: ^9.3.0+1 # app routing
+  flutter_svg: ^2.0.17 # for svg iconsё
+  provider: ^6.1.2 # # used to push data down the widget tree
+  flutter_bloc: ^9.0.0 # general state manager in app
+  # firebase services
+  firebase_core: ^3.12.1
+  firebase_auth: ^5.5.1
+  cloud_firestore: ^5.6.5
+  # multi language support
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +31,16 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
+  fonts:
+    - family: ALSPofo
+      fonts:
+        - asset: assets/fonts/ALSPofo-Regular.ttf
+        - asset: assets/fonts/ALSPofo-Light.ttf
+          weight: 300
+        - asset: assets/fonts/ALSPofo-Bold.ttf
+          weight: 700
+
+  assets:
+    - assets/icons/
+    - assets/fonts/

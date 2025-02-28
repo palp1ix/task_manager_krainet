@@ -1,0 +1,133 @@
+{
+    "@@locale": "en",
+    "appTitle": "Task Manager",
+    "categoryItemAll": "All",
+    "@categoryItemAll": {
+        "description": ""
+    },
+    "categoryItemToday": "Today",
+    "@categoryItemToday": {
+        "description": ""
+    },
+    "categoryItemWork": "Work",
+    "@categoryItemWork": {
+        "description": ""
+    },
+    "categoryItemPersonal": "Personal",
+    "@categoryItemPersonal": {
+        "description": ""
+    },
+    "categoryItemCompleted": "Completed",
+    "@categoryItemCompleted": {
+        "description": ""
+    },
+    "subName": "Krainet test task",
+    "loginTitle": "Login",
+    "@loginTitle": {
+        "description": "Title for the login screen"
+    },
+    "welcomeBack": "Welcome Back!",
+    "@welcomeBack": {
+        "description": "Header text on login screen"
+    },
+    "loginAccessAccount": "Log in to access your account",
+    "@loginAccessAccount": {
+        "description": "Subtitle on login screen"
+    },
+    "email": "Email",
+    "@email": {
+        "description": "Email field label"
+    },
+    "enterEmail": "Enter your email",
+    "@enterEmail": {
+        "description": "Hint text for email input field"
+    },
+    "password": "Password",
+    "@password": {
+        "description": "Password field label"
+    },
+    "enterPassword": "Enter your password",
+    "@enterPassword": {
+        "description": "Hint text for password input field"
+    },
+    "loginButton": "Login",
+    "@loginButton": {
+        "description": "Text on login button"
+    },
+    "noAccount": "Don't have an account?",
+    "@noAccount": {
+        "description": "Text for users without an account"
+    },
+    "signUp": "Sign Up",
+    "@signUp": {
+        "description": "Text for sign up button/link"
+    },
+    "registrationMainWord": "Registration",
+    "@registrationMainWord": {
+        "description": "Title for registration screen"
+    },
+    "createAccount": "Create Account",
+    "@createAccount": {
+        "description": "Header text on registration screen"
+    },
+    "signUpToGetStarted": "Sign up to get started",
+    "@signUpToGetStarted": {
+        "description": "Subtitle on registration screen"
+    },
+    "fullName": "Full Name",
+    "@fullName": {
+        "description": "Full name field label"
+    },
+    "enterFullName": "Enter your full name",
+    "@enterFullName": {
+        "description": "Hint text for name input field"
+    },
+    "confirmPassword": "Confirm Password",
+    "@confirmPassword": {
+        "description": "Confirm password field label"
+    },
+    "confirmYourPassword": "Confirm your password",
+    "@confirmYourPassword": {
+        "description": "Hint text for confirm password field"
+    },
+    "haveAccount": "Already have an account?",
+    "@haveAccount": {
+        "description": "Text for users who already have an account"
+    },
+    "pleaseEnterName": "Please enter your name",
+    "@pleaseEnterName": {
+        "description": "Error message for empty name field"
+    },
+    "pleaseEnterEmail": "Please enter your email",
+    "@pleaseEnterEmail": {
+        "description": "Error message for empty email field"
+    },
+    "pleaseEnterValidEmail": "Please enter a valid email",
+    "@pleaseEnterValidEmail": {
+        "description": "Error message for invalid email format"
+    },
+    "pleaseEnterPassword": "Please enter your password",
+    "@pleaseEnterPassword": {
+        "description": "Error message for empty password field"
+    },
+    "pleaseEnterPasswordNew": "Please enter a password",
+    "@pleaseEnterPasswordNew": {
+        "description": "Error message for empty password field in registration"
+    },
+    "passwordMustBeSixChars": "Password must be at least 6 characters",
+    "@passwordMustBeSixChars": {
+        "description": "Error message for short password"
+    },
+    "pleaseConfirmPassword": "Please confirm your password",
+    "@pleaseConfirmPassword": {
+        "description": "Error message for empty confirm password field"
+    },
+    "passwordsDoNotMatch": "Passwords do not match",
+    "@passwordsDoNotMatch": {
+        "description": "Error message when passwords don't match"
+    },
+    "addNewTask": "Add New Task",
+    "@addNewTask": {
+        "description": "Title for add new task screen"
+    }
+}

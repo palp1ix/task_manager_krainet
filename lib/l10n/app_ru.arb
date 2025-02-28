@@ -1,0 +1,52 @@
+{
+    "@@locale": "ru",
+    "appTitle": "Task Manager",
+    "categoryItemAll": "Все",
+    "@categoryItemAll": {
+        "description": ""
+    },
+    "categoryItemToday": "Сегодня",
+    "@categoryItemToday": {
+        "description": ""
+    },
+    "categoryItemWork": "Работа",
+    "@categoryItemWork": {
+        "description": ""
+    },
+    "categoryItemPersonal": "Личные",
+    "@categoryItemPersonal": {
+        "description": ""
+    },
+    "categoryItemCompleted": "Завершённые",
+    "@categoryItemCompleted": {
+        "description": ""
+    },
+    "subName": "Krainet тестовое задание",
+    "loginTitle": "Вход",
+    "welcomeBack": "С возвращением!",
+    "loginAccessAccount": "Войдите в свой аккаунт",
+    "email": "Эл. почта",
+    "enterEmail": "Введите адрес эл. почты",
+    "pleaseEnterEmail": "Пожалуйста, введите адрес эл. почты",
+    "pleaseEnterValidEmail": "Пожалуйста, введите корректный адрес эл. почты",
+    "password": "Пароль",
+    "enterPassword": "Введите пароль",
+    "pleaseEnterPassword": "Пожалуйста, введите пароль",
+    "loginButton": "Войти",
+    "noAccount": "Нет аккаунта?",
+    "signUp": "Регистрация",
+    "registrationMainWord": "Регистрация",
+    "createAccount": "Создать аккаунт",
+    "signUpToGetStarted": "Зарегистрируйтесь, чтобы начать",
+    "fullName": "Полное имя",
+    "enterFullName": "Введите ваше полное имя",
+    "pleaseEnterName": "Пожалуйста, введите ваше имя",
+    "pleaseEnterPasswordNew": "Пожалуйста, введите пароль",
+    "passwordMustBeSixChars": "Пароль должен содержать не менее 6 символов",
+    "confirmPassword": "Подтвердите пароль",
+    "confirmYourPassword": "Подтвердите ваш пароль",
+    "pleaseConfirmPassword": "Пожалуйста, подтвердите ваш пароль",
+    "passwordsDoNotMatch": "Пароли не совпадают",
+    "haveAccount": "Уже есть аккаунт?",
+    "addNewTask": "Добавить новую задачу"
+}
