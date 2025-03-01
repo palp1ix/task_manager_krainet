@@ -8,10 +8,13 @@ import 'package:task_manager_krainet/data/repositories/task_repository_impl.dart
 import 'package:task_manager_krainet/domain/repositories/auth_repository.dart';
 import 'package:task_manager_krainet/domain/repositories/task_repository.dart';
 import 'package:task_manager_krainet/domain/usecases/add_task.dart';
+import 'package:task_manager_krainet/domain/usecases/get_task_list.dart';
 import 'package:task_manager_krainet/domain/usecases/log_out.dart';
 import 'package:task_manager_krainet/domain/usecases/sign_in.dart';
+import 'package:task_manager_krainet/domain/usecases/update_task.dart';
 import 'package:task_manager_krainet/firebase_options.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
+import 'package:task_manager_krainet/presentation/screens/tasks/bloc/task_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -49,11 +52,23 @@ void _initAuth() {
     ..registerFactory(
       () => AddTask(serviceLocator()),
     )
+    ..registerFactory(
+      () => GetTaskList(serviceLocator()),
+    )
+    ..registerFactory(
+      () => UpdateTaskUseCase(serviceLocator()),
+    )
     // Blocs
     ..registerFactory<AuthBloc>(
       () => AuthBloc(serviceLocator(), serviceLocator()),
     )
     ..registerLazySingleton(
       () => AddTaskBloc(serviceLocator()),
+    )
+    ..registerLazySingleton(
+      () => TaskBloc(
+        getTaskList: serviceLocator(),
+        updateTaskUseCase: serviceLocator(),
+      ),
     );
 }

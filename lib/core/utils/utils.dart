@@ -8,11 +8,15 @@ class AppUtils {
   }
 
   // Function for handling reposnse with try-catch construction
-  static T serverResponseHandler<T>(T Function() closure) {
+  static T serverResponseHandler<T, E extends AppException>(
+    T Function() closure, {
+    required E Function(String message) exceptionBuilder,
+  }) {
     try {
       return closure.call();
     } catch (e) {
-      throw ServerException(e.toString());
+      // Create and throw the specific exception type provided by the caller
+      throw exceptionBuilder(e.toString());
     }
   }
 }

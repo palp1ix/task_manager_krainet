@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:task_manager_krainet/core/blocs/auth/auth_bloc.dart';
 import 'package:task_manager_krainet/init_dependencies.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
+import 'package:task_manager_krainet/presentation/screens/tasks/bloc/task_bloc.dart';
 import 'package:task_manager_krainet/shared/theme/theme.dart';
 import 'package:task_manager_krainet/core/router/router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -18,6 +19,9 @@ void main() async {
     ),
     BlocProvider(
       create: (_) => serviceLocator<AddTaskBloc>(),
+    ),
+    BlocProvider(
+      create: (_) => serviceLocator<TaskBloc>(),
     ),
   ], child: MainApp()));
 }

@@ -175,14 +175,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           category: widget.categoryName,
           date: _selectedDate,
           isCompleted: false));
-
-      final taskData = {
-        'title': _titleController.text,
-        'description': _descriptionController.text,
-        'date': _selectedDate,
-      };
-
-      debugPrint('Task created: $taskData');
     }
   }
 }

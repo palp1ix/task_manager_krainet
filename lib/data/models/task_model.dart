@@ -1,19 +1,41 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:task_manager_krainet/domain/entities/task.dart';
 
 part 'task_model.g.dart';
 
 @JsonSerializable()
-class TaskModel extends Task {
+class TaskModel {
   TaskModel(
-      {required super.title,
-      required super.description,
-      required super.date,
-      required super.isCompleted,
-      required super.category});
+      {this.id,
+      required this.title,
+      required this.description,
+      required this.date,
+      required this.isCompleted,
+      required this.category});
+
+  final int? id;
+  final String title;
+  final String description;
+  final DateTime date;
+  @BoolIntConverter()
+  final bool isCompleted;
+  final String category;
 
   factory TaskModel.fromJson(Map<String, dynamic> json) =>
       _$TaskModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$TaskModelToJson(this);
+}
+
+class BoolIntConverter implements JsonConverter<bool, int> {
+  const BoolIntConverter();
+
+  @override
+  bool fromJson(int json) {
+    return json == 1;
+  }
+
+  @override
+  int toJson(bool object) {
+    return object ? 1 : 0;
+  }
 }
