@@ -24,6 +24,13 @@ dependencies:
   # just for get_it package
   dio: ^5.4.3+1
   retrofit: ^4.4.2
+  # database (local storage)
+  sqflite: ^2.4.2
+  path_provider: ^2.1.5
+  path: ^1.9.1
+  # json serialization
+  json_serializable: ^6.9.4
+  json_annotation: ^4.9.0
   # multi language support
   flutter_localizations:
     sdk: flutter

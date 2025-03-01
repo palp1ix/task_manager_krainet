@@ -26,7 +26,7 @@ class UserButton extends StatelessWidget {
           backgroundColor: theme.colorScheme.surfaceContainer,
           padding: EdgeInsets.all(10)),
       onPressed: () {
-        context.router.push(SignupRoute());
+        context.router.push(ProfileRoute());
       },
     );
   }

@@ -4,15 +4,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_manager_krainet/core/exeptions/exceptions.dart';
+import 'package:task_manager_krainet/core/usecase/usecase.dart';
+import 'package:task_manager_krainet/domain/usecases/log_out.dart';
 import 'package:task_manager_krainet/domain/usecases/sign_in.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  // UseCases
   final SignIn signIn;
-  AuthBloc(this.signIn) : super(Unauthorized()) {
+  final LogOut logOut;
+
+  AuthBloc(this.signIn, this.logOut) : super(Unauthorized()) {
     on<AuthLogin>(_onLogin);
+    on<AuthLogout>(_onLogout);
+  }
+
+  FutureOr<void> _onLogout(event, emit) async {
+    emit(AuthInProgress());
+    try {
+      logOut(NoParams());
+      emit(Unauthorized());
+    } catch (e) {
+      emit(AuthFailed());
+    }
   }
 
   FutureOr<void> _onLogin(event, emit) async {
@@ -28,8 +44,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       } else {
         emit(Authorized(user!));
       }
-    } on AppException catch (e) {
-      emit(AuthFailed(message: e.message ?? 'Something went wrong'));
+    } catch (e) {
+      emit(AuthFailed());
     }
   }
 }

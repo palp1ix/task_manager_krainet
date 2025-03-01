@@ -54,5 +54,9 @@
     "description": "Описание",
     "title": "Название",
     "enterText": "Пожалуйста, введите значение",
-    "authorizeMessage": "Вы успешно вошли"
+    "authorizeMessage": "Вы успешно вошли",
+    "logout": "Выйти из аккаунта",
+    "noEmail": "Нет электронной почты",
+    "errorMessage": "Что-то пошло не так",
+    "taskCreated": "Задача создана"
 }

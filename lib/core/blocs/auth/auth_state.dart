@@ -16,10 +16,6 @@ final class Authorized extends AuthState {
 
 final class AuthInProgress extends AuthState {}
 
-final class AuthFailed extends AuthState {
-  const AuthFailed({required this.message});
-
-  final String message;
-}
+final class AuthFailed extends AuthState {}
 
 final class Unauthorized extends AuthState {}

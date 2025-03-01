@@ -1,6 +1,11 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class AppColors {
+  // Both Themes
+  static const error = Colors.red;
+  static const success = Colors.green;
+  static const progressIndicator = Colors.white;
+
   // Light Theme
   static const accentLight = Color(0xFFC400FF);
   static const whiteBackground = Color(0xFFF7F9FF);

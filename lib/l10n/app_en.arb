@@ -138,5 +138,9 @@
     "@enterText": {
         "description": "Text if field for input is empry"
     },
-    "authorizeMessage": "You successfuly login"
+    "authorizeMessage": "You successfuly login",
+    "logout": "Log out",
+    "noEmail": "There's no email.",
+    "errorMessage": "Something went wrong",
+    "taskCreated": "Task Created"
 }

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:task_manager_krainet/core/router/router.gr.dart';
 
@@ -10,6 +11,7 @@ class AddNewTaskButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoryName = context.watch<String>();
     final theme = Theme.of(context);
 
     return IconButton(
@@ -24,7 +26,7 @@ class AddNewTaskButton extends StatelessWidget {
         backgroundColor: theme.primaryColor,
       ),
       onPressed: () {
-        context.router.push(AddTaskRoute());
+        context.router.push(AddTaskRoute(categoryName: categoryName));
       },
     );
   }

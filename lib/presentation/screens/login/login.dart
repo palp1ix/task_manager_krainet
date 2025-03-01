@@ -5,6 +5,8 @@ import 'package:task_manager_krainet/core/blocs/auth/auth_bloc.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
 import 'package:task_manager_krainet/core/router/router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:task_manager_krainet/shared/theme/colors.dart';
+import 'package:task_manager_krainet/shared/widgets/decorated_dialog.dart';
 import 'package:task_manager_krainet/shared/widgets/decorated_text_form_field.dart';
 import 'package:task_manager_krainet/shared/widgets/base_auth_page.dart';
 
@@ -106,17 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
       bloc: authBloc,
       listener: (context, state) {
         if (state is AuthInProgress) {
-          showDialog(
-            context: context,
-            barrierDismissible: false, // Prevent closing by tapping outside
-            builder: (context) {
-              return const Center(
-                child: CircularProgressIndicator.adaptive(
-                  backgroundColor: Colors.white,
-                ),
-              );
-            },
-          );
+          showProgressIndicatorDialog(context);
         } else if (state is Authorized || state is AuthFailed) {
           // Close the dialog when auth completes (success or failure)
           Navigator.of(context).pop();
@@ -125,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is Authorized) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                backgroundColor: Colors.green,
+                backgroundColor: AppColors.success,
                 content: Text(localization.authorizeMessage),
               ),
             );
@@ -135,8 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state is AuthFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                backgroundColor: Colors.red,
-                content: Text(state.message),
+                backgroundColor: AppColors.error,
+                content: Text(localization.errorMessage),
               ),
             );
           }

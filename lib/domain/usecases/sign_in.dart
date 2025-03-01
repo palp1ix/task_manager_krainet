@@ -8,8 +8,8 @@ class SignIn implements UseCase<UserCredential, SignInParams> {
   final AuthRepository authRepository;
 
   @override
-  Future<UserCredential> call(SignInParams params) {
-    return authRepository.login(params.email, params.password);
+  Future<UserCredential> call(SignInParams params) async {
+    return await authRepository.login(params.email, params.password);
   }
 }
 

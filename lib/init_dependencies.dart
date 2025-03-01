@@ -2,10 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:task_manager_krainet/core/blocs/auth/auth_bloc.dart';
 import 'package:task_manager_krainet/data/datasources/auth_remote_data_source.dart';
+import 'package:task_manager_krainet/data/datasources/task_local_data_source.dart';
 import 'package:task_manager_krainet/data/repositories/auth_repository_impl.dart';
+import 'package:task_manager_krainet/data/repositories/task_repository_impl.dart';
 import 'package:task_manager_krainet/domain/repositories/auth_repository.dart';
+import 'package:task_manager_krainet/domain/repositories/task_repository.dart';
+import 'package:task_manager_krainet/domain/usecases/add_task.dart';
+import 'package:task_manager_krainet/domain/usecases/log_out.dart';
 import 'package:task_manager_krainet/domain/usecases/sign_in.dart';
 import 'package:task_manager_krainet/firebase_options.dart';
+import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
 
 final serviceLocator = GetIt.instance;
 
@@ -23,16 +29,31 @@ void _initAuth() {
     ..registerFactory<AuthRemoteDataSource>(
       () => AuthRemoteDataSourceImpl(),
     )
+    ..registerFactory<TaskLocalDataSource>(
+      () => TaskLocalDataSourceImpl(),
+    )
     // Repositories
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(serviceLocator()),
+    )
+    ..registerFactory<TaskRepository>(
+      () => TaskRepositoryImpl(serviceLocator()),
     )
     // Usecases
     ..registerFactory(
       () => SignIn(serviceLocator()),
     )
+    ..registerFactory(
+      () => LogOut(serviceLocator()),
+    )
+    ..registerFactory(
+      () => AddTask(serviceLocator()),
+    )
     // Blocs
     ..registerFactory<AuthBloc>(
-      () => AuthBloc(serviceLocator()),
+      () => AuthBloc(serviceLocator(), serviceLocator()),
+    )
+    ..registerLazySingleton(
+      () => AddTaskBloc(serviceLocator()),
     );
 }
