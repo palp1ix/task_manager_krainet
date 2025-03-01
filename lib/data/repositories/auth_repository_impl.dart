@@ -3,7 +3,7 @@ import 'package:task_manager_krainet/data/datasources/auth_remote_data_source.da
 import 'package:task_manager_krainet/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl({required this.remoteDataSource});
+  AuthRepositoryImpl(this.remoteDataSource);
 
   final AuthRemoteDataSource remoteDataSource;
 

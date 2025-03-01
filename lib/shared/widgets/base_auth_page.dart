@@ -42,7 +42,7 @@ class BaseAuthPage extends StatelessWidget {
   ///
   /// All parameters are required to ensure the page has all necessary elements.
   const BaseAuthPage({
-    Key? key,
+    super.key,
     required this.formKey,
     required this.title,
     required this.subtitle,
@@ -53,7 +53,7 @@ class BaseAuthPage extends StatelessWidget {
     required this.onAlternativeActionPressed,
     required this.formFields,
     required this.appBarTitle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

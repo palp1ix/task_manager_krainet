@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class TapOutsideToUnfocus extends StatelessWidget {
   final Widget child;
 
-  TapOutsideToUnfocus({required this.child});
+  const TapOutsideToUnfocus({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

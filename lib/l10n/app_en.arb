@@ -137,5 +137,6 @@
     "enterText": "Please, enter a value",
     "@enterText": {
         "description": "Text if field for input is empry"
-    }
+    },
+    "authorizeMessage": "You successfuly login"
 }

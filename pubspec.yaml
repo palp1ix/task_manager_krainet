@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   auto_route: ^9.3.0+1 # app routing
-  flutter_svg: ^2.0.17 # for svg iconsё
+  flutter_svg: ^2.0.17 # for svg icons
   provider: ^6.1.2 # # used to push data down the widget tree
   flutter_bloc: ^9.0.0 # general state manager in app
   # firebase services
@@ -20,6 +20,10 @@ dependencies:
 
   logger: ^2.5.0 # logger for debugging app
   equatable: ^2.0.7 # for comparison of custom classes
+  get_it: ^8.0.3 # service locator for dependency injection
+  # just for get_it package
+  dio: ^5.4.3+1
+  retrofit: ^4.4.2
   # multi language support
   flutter_localizations:
     sdk: flutter

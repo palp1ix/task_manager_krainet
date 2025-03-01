@@ -1,17 +1,21 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:task_manager_krainet/firebase_options.dart';
+import 'package:task_manager_krainet/core/blocs/auth/auth_bloc.dart';
+import 'package:task_manager_krainet/init_dependencies.dart';
 import 'package:task_manager_krainet/shared/theme/theme.dart';
 import 'package:task_manager_krainet/core/router/router.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(MainApp());
+  await initDependencies();
+  // Provide all our blocs
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(
+      create: (_) => serviceLocator<AuthBloc>(),
+    )
+  ], child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
