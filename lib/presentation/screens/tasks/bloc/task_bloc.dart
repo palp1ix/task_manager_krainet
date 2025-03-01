@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager_krainet/core/services/notification_service.dart';
 import 'package:task_manager_krainet/domain/entities/task.dart';
 import 'package:task_manager_krainet/domain/usecases/get_task_list.dart';
 import 'package:task_manager_krainet/domain/usecases/update_task.dart';
@@ -12,6 +13,7 @@ part 'task_state.dart';
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final GetTaskList getTaskList;
   final UpdateTaskUseCase updateTaskUseCase;
+  final NotificationService _notificationService = NotificationService.instance;
 
   TaskBloc({
     required this.getTaskList,
@@ -50,6 +52,18 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         final params = UpdateTaskParams(updatedTask);
         // Update in database
         await updateTaskUseCase(params);
+
+        // Handle notifications based on completion status
+        if (updatedTask.isCompleted) {
+          // Task is now completed, cancel any scheduled notification
+          await _notificationService.cancelTaskNotification(updatedTask);
+        } else {
+          // Task is now uncompleted, schedule a notification if the date is in the future
+          final now = DateTime.now();
+          if (updatedTask.date.isAfter(now)) {
+            await _notificationService.scheduleTaskNotification(updatedTask);
+          }
+        }
 
         // Update the task list in the state
         final List<Task> updatedTasks = List<Task>.from(currentState.tasks)

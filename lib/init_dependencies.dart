@@ -13,6 +13,7 @@ import 'package:task_manager_krainet/domain/usecases/log_out.dart';
 import 'package:task_manager_krainet/domain/usecases/sign_in.dart';
 import 'package:task_manager_krainet/domain/usecases/update_task.dart';
 import 'package:task_manager_krainet/firebase_options.dart';
+import 'package:task_manager_krainet/core/services/notification_service.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
 import 'package:task_manager_krainet/presentation/screens/tasks/bloc/task_bloc.dart';
 
@@ -23,6 +24,9 @@ Future<void> initDependencies() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  // Initialize notification service
+  await NotificationService.instance.init();
+  
   _initAuth();
 }
 
