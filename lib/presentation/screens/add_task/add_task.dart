@@ -1,16 +1,17 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
-import 'package:task_manager_krainet/shared/theme/colors.dart';
-import 'package:task_manager_krainet/shared/widgets/decorated_button.dart';
-import 'package:task_manager_krainet/shared/widgets/decorated_dialog.dart';
-import 'package:task_manager_krainet/shared/widgets/decorated_text_form_field.dart';
+import 'package:task_manager_krainet/presentation/screens/add_task/widgets/date_time_picker.dart';
+import 'package:task_manager_krainet/presentation/screens/add_task/widgets/submit_button.dart';
+import 'package:task_manager_krainet/presentation/screens/add_task/widgets/task_form_fields.dart';
+import 'package:task_manager_krainet/presentation/screens/add_task/widgets/task_status_listener.dart';
 import 'package:task_manager_krainet/shared/widgets/tap_outside_to_unfocus.dart';
 
+/// The main screen for adding a new task
+/// Uses a form with various input fields for task details
 @RoutePage()
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key, required this.categoryName});
@@ -27,6 +28,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final _descriptionController = TextEditingController();
   late AddTaskBloc addTaskBloc;
   DateTime _selectedDate = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
 
   @override
   void initState() {
@@ -44,35 +46,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
 
-    return BlocListener<AddTaskBloc, AddTaskState>(
-      listener: (context, state) {
-        if (state is AddTaskInProgress) {
-          showProgressIndicatorDialog(context);
-        } else if (state is AddTaskFailed) {
-          // Close progress dialog
-          Navigator.of(context).pop();
-
-          // Show message
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: AppColors.error,
-              content: Text(localization.errorMessage),
-            ),
-          );
-        } else if (state is AddTaskSuccess) {
-          // Return to tasks page
-          context.router.back();
-          // Show message
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              backgroundColor: AppColors.success,
-              content: Text(localization.taskCreated),
-            ),
-          );
-        }
-      },
+    return TaskStatusListener(
       child: TapOutsideToUnfocus(
         child: Scaffold(
           appBar: AppBar(
@@ -90,54 +65,30 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Title input
-                    DecoratedTextFormField(
-                        controller: _titleController,
-                        labelText: localization.title),
-                    const SizedBox(height: 16),
-
-                    // Description input
-                    DecoratedTextFormField(
-                      controller: _descriptionController,
-                      labelText: localization.description,
-                      maxLines: 3,
+                    // Title and description input fields
+                    TaskFormFields(
+                      titleController: _titleController,
+                      descriptionController: _descriptionController,
                     ),
                     const SizedBox(height: 16),
 
                     // Date Input
-                    InkWell(
-                      onTap: () => _selectDate(context),
-                      child: InputDecorator(
-                        decoration: InputDecoration(
-                          labelText: localization.dueDate,
-                          border: OutlineInputBorder().copyWith(
-                              borderRadius: BorderRadius.circular(
-                                  AppConstants.inputBorderRadius)),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              DateFormat('MM dd').format(_selectedDate),
-                            ),
-                            const Icon(Icons.calendar_today),
-                          ],
-                        ),
-                      ),
+                    DatePickerField(
+                      selectedDate: _selectedDate,
+                      onTap: _selectDate,
+                    ),
+                    const SizedBox(height: 16),
+
+                    // Time Input
+                    TimePickerField(
+                      selectedTime: _selectedTime,
+                      onTap: _selectTime,
                     ),
                     const SizedBox(height: 24),
 
-                    //Submit button
-                    DecoratedButton(
-                      onPressed: () {
-                        _submitForm();
-                      },
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      child: Text(
-                        localization.createTask,
-                        style: theme.textTheme.bodyLarge
-                            ?.copyWith(color: theme.colorScheme.surface),
-                      ),
+                    // Submit button
+                    SubmitButton(
+                      onPressed: _submitForm,
                     ),
                   ],
                 ),
@@ -149,7 +100,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     );
   }
 
-  // Function for select date
+  /// Opens a date picker dialog and updates the selected date
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -158,7 +109,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       lastDate: DateTime(AppConstants.lastYearRange),
     );
 
-    // Also validating
+    // Update state if a new valid date was selected
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
@@ -166,15 +117,38 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     }
   }
 
-  // Final after validating we submit form and push event to bloc
+  /// Opens a time picker dialog and updates the selected time
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked =
+        await showTimePicker(context: context, initialTime: _selectedTime);
+
+    // Update state if a new valid time was selected
+    if (picked != null && picked != _selectedTime) {
+      setState(() {
+        _selectedTime = picked;
+      });
+    }
+  }
+
+  /// Validates the form and submits task data to the bloc
   void _submitForm() {
     if (_formKey.currentState!.validate()) {
+      // Combine date and time into a single DateTime object
+      final DateTime combinedDateTime = DateTime(
+        _selectedDate.year,
+        _selectedDate.month,
+        _selectedDate.day,
+        _selectedTime.hour,
+        _selectedTime.minute,
+      );
+
       addTaskBloc.add(CreateTask(
-          title: _titleController.text,
-          description: _descriptionController.text,
-          category: widget.categoryName,
-          date: _selectedDate,
-          isCompleted: false));
+        title: _titleController.text,
+        description: _descriptionController.text,
+        category: widget.categoryName,
+        date: combinedDateTime,
+        isCompleted: false,
+      ));
     }
   }
 }

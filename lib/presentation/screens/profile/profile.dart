@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_manager_krainet/core/blocs/auth/auth_bloc.dart';
+import 'package:task_manager_krainet/presentation/blocs/auth/auth_bloc.dart';
 import 'package:task_manager_krainet/core/router/router.gr.dart';
 import 'package:task_manager_krainet/core/services/auth_service.dart';
 import 'package:task_manager_krainet/shared/theme/colors.dart';

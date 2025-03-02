@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
-import 'package:task_manager_krainet/core/blocs/auth/auth_bloc.dart';
+import 'package:task_manager_krainet/presentation/blocs/auth/auth_bloc.dart';
 import 'package:task_manager_krainet/data/datasources/auth_remote_data_source.dart';
 import 'package:task_manager_krainet/data/datasources/task_local_data_source.dart';
 import 'package:task_manager_krainet/data/repositories/auth_repository_impl.dart';
@@ -26,7 +26,7 @@ Future<void> initDependencies() async {
 
   // Initialize notification service
   await NotificationService.instance.init();
-  
+
   _initAuth();
 }
 

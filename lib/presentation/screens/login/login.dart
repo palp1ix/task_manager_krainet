@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:task_manager_krainet/core/blocs/auth/auth_bloc.dart';
+import 'package:task_manager_krainet/presentation/blocs/auth/auth_bloc.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
 import 'package:task_manager_krainet/core/router/router.gr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
