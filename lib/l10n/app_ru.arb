@@ -51,6 +51,7 @@
     "addNewTask": "Добавить новую задачу",
     "createTask": "Создать задачу",
     "dueDate": "Дата",
+    "dueTime": "Время",
     "description": "Описание",
     "title": "Название",
     "enterText": "Пожалуйста, введите значение",
@@ -58,5 +59,11 @@
     "logout": "Выйти из аккаунта",
     "noEmail": "Нет электронной почты",
     "errorMessage": "Что-то пошло не так",
-    "taskCreated": "Задача создана"
+    "taskCreated": "Задача создана",
+    "deleteTask": "Удалить задачу",
+    "saveChanges": "Сохранить изменения",
+    "deleteTaskConfirmation": "Удалить задачу",
+    "deleteTaskConfirmationMessage": "Вы уверены, что хотите удалить эту задачу?",
+    "cancel": "Отмена",
+    "delete": "Удалить"
 }

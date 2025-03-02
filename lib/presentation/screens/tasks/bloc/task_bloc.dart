@@ -12,7 +12,7 @@ part 'task_state.dart';
 
 class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final GetTaskList getTaskList;
-  final UpdateTaskUseCase updateTaskUseCase;
+  final UpdateTask updateTaskUseCase;
   final NotificationService _notificationService = NotificationService.instance;
 
   TaskBloc({

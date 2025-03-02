@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
-import 'package:task_manager_krainet/presentation/screens/add_task/widgets/date_time_picker.dart';
+import 'package:task_manager_krainet/shared/widgets/date_time_picker.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/widgets/submit_button.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/widgets/task_form_fields.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/widgets/task_status_listener.dart';

@@ -9,8 +9,9 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i7;
-import 'package:flutter/material.dart' as _i8;
+import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/material.dart' as _i9;
+import 'package:task_manager_krainet/domain/entities/task.dart' as _i10;
 import 'package:task_manager_krainet/presentation/screens/add_task/add_task.dart'
     as _i1;
 import 'package:task_manager_krainet/presentation/screens/home/home.dart'
@@ -21,16 +22,18 @@ import 'package:task_manager_krainet/presentation/screens/profile/profile.dart'
     as _i4;
 import 'package:task_manager_krainet/presentation/screens/registration/registration.dart'
     as _i5;
-import 'package:task_manager_krainet/presentation/screens/tasks/tasks.dart'
+import 'package:task_manager_krainet/presentation/screens/task_details/task_details.dart'
     as _i6;
+import 'package:task_manager_krainet/presentation/screens/tasks/tasks.dart'
+    as _i7;
 
 /// generated route for
 /// [_i1.AddTaskScreen]
-class AddTaskRoute extends _i7.PageRouteInfo<AddTaskRouteArgs> {
+class AddTaskRoute extends _i8.PageRouteInfo<AddTaskRouteArgs> {
   AddTaskRoute({
-    _i8.Key? key,
+    _i9.Key? key,
     required String categoryName,
-    List<_i7.PageRouteInfo>? children,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
          AddTaskRoute.name,
          args: AddTaskRouteArgs(key: key, categoryName: categoryName),
@@ -39,7 +42,7 @@ class AddTaskRoute extends _i7.PageRouteInfo<AddTaskRouteArgs> {
 
   static const String name = 'AddTaskRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AddTaskRouteArgs>();
@@ -51,7 +54,7 @@ class AddTaskRoute extends _i7.PageRouteInfo<AddTaskRouteArgs> {
 class AddTaskRouteArgs {
   const AddTaskRouteArgs({this.key, required this.categoryName});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   final String categoryName;
 
@@ -63,13 +66,13 @@ class AddTaskRouteArgs {
 
 /// generated route for
 /// [_i2.HomeScreen]
-class HomeRoute extends _i7.PageRouteInfo<void> {
-  const HomeRoute({List<_i7.PageRouteInfo>? children})
+class HomeRoute extends _i8.PageRouteInfo<void> {
+  const HomeRoute({List<_i8.PageRouteInfo>? children})
     : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       return const _i2.HomeScreen();
@@ -79,13 +82,13 @@ class HomeRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.LoginScreen]
-class LoginRoute extends _i7.PageRouteInfo<void> {
-  const LoginRoute({List<_i7.PageRouteInfo>? children})
+class LoginRoute extends _i8.PageRouteInfo<void> {
+  const LoginRoute({List<_i8.PageRouteInfo>? children})
     : super(LoginRoute.name, initialChildren: children);
 
   static const String name = 'LoginRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       return const _i3.LoginScreen();
@@ -95,13 +98,13 @@ class LoginRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.ProfileScreen]
-class ProfileRoute extends _i7.PageRouteInfo<void> {
-  const ProfileRoute({List<_i7.PageRouteInfo>? children})
+class ProfileRoute extends _i8.PageRouteInfo<void> {
+  const ProfileRoute({List<_i8.PageRouteInfo>? children})
     : super(ProfileRoute.name, initialChildren: children);
 
   static const String name = 'ProfileRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       return const _i4.ProfileScreen();
@@ -111,13 +114,13 @@ class ProfileRoute extends _i7.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.SignupScreen]
-class SignupRoute extends _i7.PageRouteInfo<void> {
-  const SignupRoute({List<_i7.PageRouteInfo>? children})
+class SignupRoute extends _i8.PageRouteInfo<void> {
+  const SignupRoute({List<_i8.PageRouteInfo>? children})
     : super(SignupRoute.name, initialChildren: children);
 
   static const String name = 'SignupRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       return const _i5.SignupScreen();
@@ -126,12 +129,49 @@ class SignupRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.TasksScreen]
-class TasksScreenRoute extends _i7.PageRouteInfo<TasksScreenRouteArgs> {
+/// [_i6.TaskDetailsScreen]
+class TaskDetailsRoute extends _i8.PageRouteInfo<TaskDetailsRouteArgs> {
+  TaskDetailsRoute({
+    _i9.Key? key,
+    required _i10.Task task,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
+         TaskDetailsRoute.name,
+         args: TaskDetailsRouteArgs(key: key, task: task),
+         initialChildren: children,
+       );
+
+  static const String name = 'TaskDetailsRoute';
+
+  static _i8.PageInfo page = _i8.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<TaskDetailsRouteArgs>();
+      return _i6.TaskDetailsScreen(key: args.key, task: args.task);
+    },
+  );
+}
+
+class TaskDetailsRouteArgs {
+  const TaskDetailsRouteArgs({this.key, required this.task});
+
+  final _i9.Key? key;
+
+  final _i10.Task task;
+
+  @override
+  String toString() {
+    return 'TaskDetailsRouteArgs{key: $key, task: $task}';
+  }
+}
+
+/// generated route for
+/// [_i7.TasksScreen]
+class TasksScreenRoute extends _i8.PageRouteInfo<TasksScreenRouteArgs> {
   TasksScreenRoute({
-    _i8.Key? key,
+    _i9.Key? key,
     required String categoryName,
-    List<_i7.PageRouteInfo>? children,
+    List<_i8.PageRouteInfo>? children,
   }) : super(
          TasksScreenRoute.name,
          args: TasksScreenRouteArgs(key: key, categoryName: categoryName),
@@ -140,11 +180,11 @@ class TasksScreenRoute extends _i7.PageRouteInfo<TasksScreenRouteArgs> {
 
   static const String name = 'TasksScreenRoute';
 
-  static _i7.PageInfo page = _i7.PageInfo(
+  static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<TasksScreenRouteArgs>();
-      return _i6.TasksScreen(key: args.key, categoryName: args.categoryName);
+      return _i7.TasksScreen(key: args.key, categoryName: args.categoryName);
     },
   );
 }
@@ -152,7 +192,7 @@ class TasksScreenRoute extends _i7.PageRouteInfo<TasksScreenRouteArgs> {
 class TasksScreenRouteArgs {
   const TasksScreenRouteArgs({this.key, required this.categoryName});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   final String categoryName;
 

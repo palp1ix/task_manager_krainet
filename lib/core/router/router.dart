@@ -15,5 +15,6 @@ class AppRouter extends RootStackRouter {
             page: ProfileRoute.page,
             path: '/profile',
             guards: [ProfileGuard()]),
+        AutoRoute(page: TaskDetailsRoute.page, path: '/task_details')
       ];
 }

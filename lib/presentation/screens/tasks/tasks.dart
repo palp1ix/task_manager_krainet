@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
+import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
+import 'package:task_manager_krainet/presentation/screens/task_details/bloc/task_details_bloc.dart';
 import 'package:task_manager_krainet/presentation/screens/tasks/bloc/task_bloc.dart';
 import 'package:task_manager_krainet/presentation/screens/tasks/widgets/task_list_item.dart';
 import 'package:task_manager_krainet/presentation/screens/tasks/widgets/task_top_bar.dart';
@@ -35,50 +37,71 @@ class _TasksScreenState extends State<TasksScreen> {
     final theme = Theme.of(context);
     final localization = AppLocalizations.of(context)!;
 
-    return Provider<String>.value(
-      value: widget.categoryName,
-      child: Scaffold(
-          body: SafeArea(
-              child: Column(
-        children: [
-          SizedBox(height: AppConstants.topInset),
-          TaskTopBar(),
-          BlocBuilder<TaskBloc, TaskState>(
-              bloc: _taskBloc,
-              builder: (context, state) {
-                if (state is TaskSuccess) {
-                  final tasks = state.tasks;
-                  return Expanded(
-                    child: CustomScrollView(
-                      slivers: [
-                        SliverList.builder(
-                            itemCount: tasks.length,
-                            itemBuilder: (context, index) {
-                              final task = tasks[index];
-                              return TaskListItem(
-                                key: ValueKey(task.id),
-                                task: task,
-                                onCheckBoxChanged: (bool? value) {
-                                  // Dispatch event to update completion status
-                                  _taskBloc.add(
-                                    UpdateTaskCompletionEvent(task: task),
-                                  );
-                                },
-                              );
-                            })
-                      ],
-                    ),
-                  );
-                } else if (state is TaskInProgress) {
-                  return const Center(
-                      child: CircularProgressIndicator.adaptive());
-                } else {
-                  // Just empty list of items if failure
-                  return SizedBox.shrink();
-                }
-              }),
-        ],
-      ))),
+    // Bloc to bloc communication via presentation layer
+    // Multi bloc listener needed for checking updates
+    // like updating, deleting task etc.
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AddTaskBloc, AddTaskState>(
+          listener: (context, state) {
+            if (state is AddTaskSuccess) {
+              _taskBloc.add(GetTaskEvent(category: widget.categoryName));
+            }
+          },
+        ),
+        BlocListener<TaskDetailsBloc, TaskDetailsState>(
+          listener: (context, state) {
+            if (state is TaskDetailsSuccess) {
+              _taskBloc.add(GetTaskEvent(category: widget.categoryName));
+            }
+          },
+        )
+      ],
+      child: Provider<String>.value(
+        value: widget.categoryName,
+        child: Scaffold(
+            body: SafeArea(
+                child: Column(
+          children: [
+            SizedBox(height: AppConstants.topInset),
+            TaskTopBar(),
+            BlocBuilder<TaskBloc, TaskState>(
+                bloc: _taskBloc,
+                builder: (context, state) {
+                  if (state is TaskSuccess) {
+                    final tasks = state.tasks;
+                    return Expanded(
+                      child: CustomScrollView(
+                        slivers: [
+                          SliverList.builder(
+                              itemCount: tasks.length,
+                              itemBuilder: (context, index) {
+                                final task = tasks[index];
+                                return TaskListItem(
+                                  key: ValueKey(task.id),
+                                  task: task,
+                                  onCheckBoxChanged: (bool? value) {
+                                    // Dispatch event to update completion status
+                                    _taskBloc.add(
+                                      UpdateTaskCompletionEvent(task: task),
+                                    );
+                                  },
+                                );
+                              })
+                        ],
+                      ),
+                    );
+                  } else if (state is TaskInProgress) {
+                    return const Center(
+                        child: CircularProgressIndicator.adaptive());
+                  } else {
+                    // Just empty list of items if failure
+                    return SizedBox.shrink();
+                  }
+                }),
+          ],
+        ))),
+      ),
     );
   }
 }

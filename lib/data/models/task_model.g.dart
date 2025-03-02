@@ -13,7 +13,8 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) => TaskModel(
       date: DateTime.parse(json['date'] as String),
       isCompleted: const BoolIntConverter()
           .fromJson((json['isCompleted'] as num).toInt()),
-      category: json['category'] as String,
+      category:
+          const TaskCategoryConverter().fromJson(json['category'] as String),
     );
 
 Map<String, dynamic> _$TaskModelToJson(TaskModel instance) => <String, dynamic>{
@@ -22,5 +23,5 @@ Map<String, dynamic> _$TaskModelToJson(TaskModel instance) => <String, dynamic>{
       'description': instance.description,
       'date': instance.date.toIso8601String(),
       'isCompleted': const BoolIntConverter().toJson(instance.isCompleted),
-      'category': instance.category,
+      'category': const TaskCategoryConverter().toJson(instance.category),
     };

@@ -1,6 +1,7 @@
 import 'package:task_manager_krainet/data/datasources/task_local_data_source.dart';
 import 'package:task_manager_krainet/data/models/task_model.dart';
 import 'package:task_manager_krainet/domain/entities/task.dart';
+import 'package:task_manager_krainet/domain/entities/task_category.dart';
 import 'package:task_manager_krainet/domain/repositories/task_repository.dart';
 
 class TaskRepositoryImpl implements TaskRepository {
@@ -20,7 +21,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  Future<List<Task>> getTasks(String category) async {
+  Future<List<Task>> getTasks(TaskCategory category) async {
     final List<TaskModel> taskModels =
         await taskLocalDataSource.getTasks(category);
     return taskModels
@@ -44,5 +45,10 @@ class TaskRepositoryImpl implements TaskRepository {
         date: task.date,
         isCompleted: task.isCompleted);
     return await taskLocalDataSource.updateTask(taskModel);
+  }
+
+  @override
+  Future<void> deleteTask(int id) async {
+    return await taskLocalDataSource.deleteTask(id);
   }
 }

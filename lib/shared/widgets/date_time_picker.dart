@@ -18,7 +18,7 @@ class DatePickerField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
-    
+
     return InkWell(
       onTap: () => onTap(context),
       child: InputDecorator(
@@ -57,12 +57,12 @@ class TimePickerField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
-    
+
     return InkWell(
       onTap: () => onTap(context),
       child: InputDecorator(
         decoration: InputDecoration(
-          labelText: localization.dueDate,
+          labelText: localization.dueTime,
           border: OutlineInputBorder().copyWith(
             borderRadius: BorderRadius.circular(AppConstants.inputBorderRadius),
           ),
