@@ -18,7 +18,7 @@ class DatabaseService {
   // Initializes the database with basic configuration
   Future<Database> _initDatabase() async {
     final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, "app_database.db");
+    final path = join(documentsDirectory.path, "app_db.db");
 
     return await openDatabase(
       path,
@@ -36,7 +36,7 @@ class DatabaseService {
   Future<void> _createTables(Database db) async {
     await db.execute('''
       CREATE TABLE tasks (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        id TEXT,
         title TEXT,
         description TEXT,
         category TEXT,

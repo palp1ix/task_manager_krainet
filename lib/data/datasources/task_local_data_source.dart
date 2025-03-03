@@ -8,7 +8,7 @@ abstract interface class TaskLocalDataSource {
   Future<int> saveTask(TaskModel task);
   Future<List<TaskModel>> getTasks(TaskCategory category);
   Future<int> updateTask(TaskModel task);
-  Future<void> deleteTask(int id);
+  Future<void> deleteTask(String id);
 }
 
 class TaskLocalDataSourceImpl implements TaskLocalDataSource {
@@ -29,17 +29,35 @@ class TaskLocalDataSourceImpl implements TaskLocalDataSource {
     }
   }
 
+  // Add a new method to check if a task with a specific ID exists
+  Future<bool> taskExists(String id) async {
+    final db = await DatabaseService.instance.database;
+
+    try {
+      final result = await db.query(
+        'tasks',
+        where: 'id = ?',
+        whereArgs: [id],
+        limit: 1,
+      );
+
+      return result.isNotEmpty;
+    } catch (e) {
+      throw LocalDataSourceException(e.toString());
+    }
+  }
+
   @override
   Future<List<TaskModel>> getTasks(TaskCategory category) async {
     final db = await DatabaseService.instance.database;
 
     try {
       List<Map<String, dynamic>> maps;
-      
+
       // For the 'all' category, return all tasks without filtering by category
       if (category == TaskCategory.all) {
         maps = await db.query('tasks');
-      } 
+      }
       // For the 'completed' category, return all tasks that are marked as completed
       else if (category == TaskCategory.completed) {
         maps = await db.query(
@@ -69,12 +87,16 @@ class TaskLocalDataSourceImpl implements TaskLocalDataSource {
   Future<int> updateTask(TaskModel task) async {
     final db = await DatabaseService.instance.database;
 
+    if (!await taskExists(task.id)) {
+      throw 'Task with this id exist in local storage';
+    }
+
     try {
       return await db.update(
         'tasks',
         task.toJson(),
         where: 'id = ?',
-        whereArgs: [task.id!],
+        whereArgs: [task.id],
       );
     } catch (e) {
       throw LocalDataSourceException(e.toString());
@@ -82,7 +104,7 @@ class TaskLocalDataSourceImpl implements TaskLocalDataSource {
   }
 
   @override
-  Future<void> deleteTask(int id) async {
+  Future<void> deleteTask(String id) async {
     final db = await DatabaseService.instance.database;
 
     try {

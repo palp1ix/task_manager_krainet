@@ -6,14 +6,14 @@ part 'task_model.g.dart';
 @JsonSerializable()
 class TaskModel {
   TaskModel(
-      {this.id,
+      {required this.id,
       required this.title,
       required this.description,
       required this.date,
       required this.isCompleted,
       required this.category});
 
-  final int? id;
+  final String id;
   final String title;
   final String description;
   final DateTime date;
@@ -43,7 +43,7 @@ class BoolIntConverter implements JsonConverter<bool, int> {
 }
 
 /// Converts TaskCategory enum to and from strings for JSON serialization
-/// 
+///
 /// This allows storing the category in a language-independent way in the database
 /// while still using the enum type in the application code.
 class TaskCategoryConverter implements JsonConverter<TaskCategory, String> {

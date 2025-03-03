@@ -8,7 +8,11 @@ sealed class AddTaskState extends Equatable {
 
 final class AddTaskSuccess extends AddTaskState {}
 
-final class AddTaskFailed extends AddTaskState {}
+final class AddTaskFailed extends AddTaskState {
+  final String? message;
+
+  AddTaskFailed({this.message});
+}
 
 final class AddTaskInProgress extends AddTaskState {}
 

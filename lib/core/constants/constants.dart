@@ -5,4 +5,5 @@ class AppConstants {
       r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
   static const int lastYearRange = 2100;
   static const double inputBorderRadius = 15;
+  static const double columnWidthPixels = 250;
 }

@@ -65,7 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     color: Colors.red,
                     child: Text(localization.logout,
                         style: theme.textTheme.bodyLarge?.copyWith(
-                            color: theme.colorScheme.surface, fontSize: 18)),
+                            color: AppColors.whiteBackground, fontSize: 18)),
                   ),
                 )
               ],

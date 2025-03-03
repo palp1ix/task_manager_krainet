@@ -4,6 +4,8 @@ import 'package:task_manager_krainet/core/utils/utils.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<UserCredential> loginWithEmailPassword(String email, String password);
+  Future<UserCredential> registerWithEmailPassword(
+      String email, String password);
   Future<void> logout();
 }
 
@@ -34,6 +36,19 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return AppUtils.serverResponseHandler<Future<void>, ServerException>(
       () async {
         return await firebaseAuth.signOut();
+      },
+      exceptionBuilder: (message) => ServerException(message),
+    );
+  }
+
+  @override
+  Future<UserCredential> registerWithEmailPassword(
+      String email, String password) {
+    return AppUtils.serverResponseHandler<Future<UserCredential>,
+        ServerException>(
+      () async {
+        return await firebaseAuth.createUserWithEmailAndPassword(
+            email: email, password: password);
       },
       exceptionBuilder: (message) => ServerException(message),
     );

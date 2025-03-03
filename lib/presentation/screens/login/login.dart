@@ -15,10 +15,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
   // Key of form for validate
   final _formKey = GlobalKey<FormState>();
@@ -57,17 +57,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     // Define form fields that are specific to login screen
     final formFields = [
-      TextFormField(
+      DecoratedTextFormField(
         controller: _emailController,
         keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          labelText: localization.email,
-          hintText: localization.enterEmail,
-          prefixIcon: Icon(Icons.email),
-          border: OutlineInputBorder().copyWith(
-              borderRadius:
-                  BorderRadius.circular(AppConstants.inputBorderRadius)),
-        ),
+        labelText: localization.email,
+        hintText: localization.enterEmail,
+        prefixIcon: Icon(Icons.email),
         validator: (value) {
           if (value == null || value.isEmpty) {
             return localization.pleaseEnterEmail;
@@ -124,11 +119,19 @@ class _LoginScreenState extends State<LoginScreen> {
             context.router.replace(const HomeRoute());
           }
           // Show error message if authentication failed
-          if (state is AuthFailed) {
+          else if (state is AuthFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 backgroundColor: AppColors.error,
                 content: Text(localization.errorMessage),
+              ),
+            );
+            // State if sync remote and local failed
+          } else if (state is SyncFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor: AppColors.error,
+                content: Text(localization.syncError),
               ),
             );
           }

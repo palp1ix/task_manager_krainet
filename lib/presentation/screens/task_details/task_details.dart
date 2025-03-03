@@ -123,14 +123,14 @@ class _TaskDetailsScreenState extends State<TaskDetailsScreen> {
                       color: AppColors.error,
                       child: Text(localization.deleteTask,
                           style: theme.textTheme.bodyLarge
-                              ?.copyWith(color: theme.colorScheme.surface))),
+                              ?.copyWith(color: AppColors.whiteBackground))),
                   SizedBox(height: 10),
                   DecoratedButton(
                       height: 50,
                       onPressed: _onTaskUpdate,
                       child: Text(localization.saveChanges,
                           style: theme.textTheme.bodyLarge
-                              ?.copyWith(color: theme.colorScheme.surface))),
+                              ?.copyWith(color: AppColors.whiteBackground))),
                 ],
               ),
             ),

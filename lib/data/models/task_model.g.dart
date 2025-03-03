@@ -7,7 +7,7 @@ part of 'task_model.dart';
 // **************************************************************************
 
 TaskModel _$TaskModelFromJson(Map<String, dynamic> json) => TaskModel(
-      id: (json['id'] as num?)?.toInt(),
+      id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
       date: DateTime.parse(json['date'] as String),

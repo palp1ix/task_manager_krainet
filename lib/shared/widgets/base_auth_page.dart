@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:task_manager_krainet/core/utils/utils.dart';
+import 'package:task_manager_krainet/shared/theme/colors.dart';
 import 'package:task_manager_krainet/shared/widgets/decorated_button.dart';
 import 'package:task_manager_krainet/shared/widgets/tap_outside_to_unfocus.dart';
 
@@ -57,8 +59,6 @@ class BaseAuthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return TapOutsideToUnfocus(
       child: Scaffold(
         appBar: AppBar(
@@ -70,58 +70,75 @@ class BaseAuthPage extends StatelessWidget {
         body: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(24.0),
-            child: Form(
-              key: formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 32),
-                  ...formFields,
-                  const SizedBox(height: 24),
-                  DecoratedButton(
-                    onPressed: onPrimaryButtonPressed,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: Text(
-                      primaryButtonText,
-                      style: theme.textTheme.bodyLarge
-                          ?.copyWith(color: theme.colorScheme.surface),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(alternativeActionMessage),
-                      TextButton(
-                        onPressed: onAlternativeActionPressed,
-                        child: Text(alternativeActionText),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+            child: _buildResponsiveForm(context),
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildResponsiveForm(BuildContext context) {
+    final theme = Theme.of(context);
+    final isBigScreen = AppUtils.isBigScreen(context);
+
+    Widget formContent = Form(
+      key: formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            subtitle,
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 32),
+          ...formFields,
+          const SizedBox(height: 24),
+          DecoratedButton(
+            onPressed: onPrimaryButtonPressed,
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              primaryButtonText,
+              style: theme.textTheme.bodyLarge
+                  ?.copyWith(color: AppColors.whiteBackground),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(alternativeActionMessage),
+              TextButton(
+                onPressed: onAlternativeActionPressed,
+                child: Text(alternativeActionText),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+
+    // If on a big screen, limit the form width with a container
+    if (isBigScreen) {
+      return Container(
+        constraints: const BoxConstraints(maxWidth: 480),
+        child: formContent,
+      );
+    }
+
+    return formContent;
   }
 }

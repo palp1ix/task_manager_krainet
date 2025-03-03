@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:task_manager_krainet/core/constants/constants.dart';
+import 'package:task_manager_krainet/core/utils/utils.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
 import 'package:task_manager_krainet/shared/widgets/date_time_picker.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/widgets/submit_button.dart';
@@ -26,13 +27,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
-  late AddTaskBloc addTaskBloc;
+  late AddTaskBloc _addTaskBloc;
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
 
   @override
   void initState() {
-    addTaskBloc = context.read<AddTaskBloc>();
+    _addTaskBloc = context.read<AddTaskBloc>();
     super.initState();
   }
 
@@ -46,6 +47,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
+    final isBigScreen = AppUtils.isBigScreen(context);
 
     return TaskStatusListener(
       child: TapOutsideToUnfocus(
@@ -56,41 +58,48 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             backgroundColor: Colors.transparent,
             centerTitle: true,
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: _formKey,
-              // For keyboard adaptivity
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Title and description input fields
-                    TaskFormFields(
-                      titleController: _titleController,
-                      descriptionController: _descriptionController,
-                    ),
-                    const SizedBox(height: 16),
+          body: Center(
+            child: Container(
+              constraints: BoxConstraints(
+                maxWidth: isBigScreen ? 400 : double.infinity,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  // For keyboard adaptivity
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Title and description input fields
+                        TaskFormFields(
+                          titleController: _titleController,
+                          descriptionController: _descriptionController,
+                        ),
+                        const SizedBox(height: 16),
 
-                    // Date Input
-                    DatePickerField(
-                      selectedDate: _selectedDate,
-                      onTap: _selectDate,
-                    ),
-                    const SizedBox(height: 16),
+                        // Date Input
+                        DatePickerField(
+                          selectedDate: _selectedDate,
+                          onTap: _selectDate,
+                        ),
+                        const SizedBox(height: 16),
 
-                    // Time Input
-                    TimePickerField(
-                      selectedTime: _selectedTime,
-                      onTap: _selectTime,
-                    ),
-                    const SizedBox(height: 24),
+                        // Time Input
+                        TimePickerField(
+                          selectedTime: _selectedTime,
+                          onTap: _selectTime,
+                        ),
+                        const SizedBox(height: 24),
 
-                    // Submit button
-                    SubmitButton(
-                      onPressed: _submitForm,
+                        // Submit button
+                        SubmitButton(
+                          onPressed: _submitForm,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -142,7 +151,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
         _selectedTime.minute,
       );
 
-      addTaskBloc.add(CreateTask(
+      _addTaskBloc.add(CreateTask(
         title: _titleController.text,
         description: _descriptionController.text,
         category: widget.categoryName,

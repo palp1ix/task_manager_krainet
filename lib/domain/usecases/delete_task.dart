@@ -15,5 +15,5 @@ class DeleteTask implements UseCase<void, DeleteParams> {
 class DeleteParams {
   DeleteParams(this.id);
 
-  final int id;
+  final String id;
 }

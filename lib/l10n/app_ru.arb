@@ -65,5 +65,6 @@
     "deleteTaskConfirmation": "Удалить задачу",
     "deleteTaskConfirmationMessage": "Вы уверены, что хотите удалить эту задачу?",
     "cancel": "Отмена",
-    "delete": "Удалить"
+    "delete": "Удалить",
+    "syncError": "Ошибка во время синхронизации удаленных задач"
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:task_manager_krainet/core/constants/constants.dart';
 
 /// A widget that displays date picker input field
 /// Used in the add task screen to select a due date
@@ -17,15 +15,26 @@ class DatePickerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return InkWell(
       onTap: () => onTap(context),
       child: InputDecorator(
         decoration: InputDecoration(
-          labelText: localization.dueDate,
-          border: OutlineInputBorder().copyWith(
-            borderRadius: BorderRadius.circular(AppConstants.inputBorderRadius),
+          filled: true,
+          fillColor: theme.colorScheme.surfaceContainer,
+          // Remove all borders but keep the shape
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
           ),
         ),
         child: Row(
@@ -56,15 +65,26 @@ class TimePickerField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return InkWell(
       onTap: () => onTap(context),
       child: InputDecorator(
         decoration: InputDecoration(
-          labelText: localization.dueTime,
-          border: OutlineInputBorder().copyWith(
-            borderRadius: BorderRadius.circular(AppConstants.inputBorderRadius),
+          filled: true,
+          fillColor: theme.colorScheme.surfaceContainer,
+          // Remove all borders but keep the shape
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
           ),
         ),
         child: Row(

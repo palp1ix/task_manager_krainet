@@ -2,14 +2,14 @@ import 'package:task_manager_krainet/core/usecase/usecase.dart';
 import 'package:task_manager_krainet/domain/entities/task.dart';
 import 'package:task_manager_krainet/domain/repositories/task_repository.dart';
 
-class UpdateTask implements UseCase<int, UpdateTaskParams> {
+class UpdateTask implements UseCase<void, UpdateTaskParams> {
   final TaskRepository taskRepository;
 
   UpdateTask(this.taskRepository);
 
   @override
-  Future<int> call(params) async {
-    return await taskRepository.updateTask(params.task);
+  Future<void> call(params) async {
+    await taskRepository.updateTask(params.task);
   }
 }
 

@@ -18,4 +18,6 @@ final class AuthInProgress extends AuthState {}
 
 final class AuthFailed extends AuthState {}
 
+final class SyncFailed extends AuthState {}
+
 final class Unauthorized extends AuthState {}

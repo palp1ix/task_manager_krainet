@@ -95,9 +95,12 @@ class NotificationService {
       iOS: iosNotificationDetails,
     );
 
+    // Generate a unique notification ID from the task's UUID
+    final int notificationId = task.id.hashCode;
+
     // Schedule the notification
     await _flutterLocalNotificationsPlugin.zonedSchedule(
-      task.id ?? DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      notificationId,
       'Task Reminder: ${task.title}',
       task.description,
       tz.TZDateTime.from(task.date, tz.local),
@@ -105,15 +108,16 @@ class NotificationService {
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
-      payload: task.id?.toString(),
+      payload: task.id,
     );
   }
 
   /// Cancel a scheduled notification for a task
   Future<void> cancelTaskNotification(Task task) async {
-    if (task.id == null) return;
     await _ensureInitialized();
-    await _flutterLocalNotificationsPlugin.cancel(task.id!);
+    // Convert the string ID to a consistent int using hashCode
+    final int notificationId = task.id.hashCode;
+    await _flutterLocalNotificationsPlugin.cancel(notificationId);
   }
 
   /// Cancel all notifications

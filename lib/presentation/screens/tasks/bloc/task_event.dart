@@ -8,7 +8,7 @@ sealed class TaskEvent extends Equatable {
 }
 
 final class GetTaskEvent extends TaskEvent {
-  GetTaskEvent({required this.category});
+  const GetTaskEvent({required this.category});
 
   final String category;
 }

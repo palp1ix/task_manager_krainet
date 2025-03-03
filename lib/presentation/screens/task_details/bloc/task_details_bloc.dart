@@ -35,7 +35,7 @@ class TaskDetailsBloc extends Bloc<TaskDetailsEvent, TaskDetailsState> {
       emit(TaskDetailsInProgress());
       // Null sufety, now in this moment id should exist
       // Because we add id to model after creation
-      final params = DeleteParams(event.task.id!);
+      final params = DeleteParams(event.task.id);
       await deleteTask(params);
       emit(TaskDetailsSuccess());
     } catch (e) {

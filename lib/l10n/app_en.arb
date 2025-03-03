@@ -149,5 +149,6 @@
     "deleteTaskConfirmation": "Delete Task",
     "deleteTaskConfirmationMessage": "Are you sure you want to delete this task?",
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "syncError": "Error while sync remote tasks"
 }

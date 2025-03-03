@@ -16,6 +16,10 @@ class ServerException extends AppException {
   ServerException([String? message]) : super(message, 'Server Error');
 }
 
+class SyncLocalRemoteException extends AppException {
+  SyncLocalRemoteException([String? message]) : super(message, 'Server Error');
+}
+
 class LocalDataSourceException extends AppException {
   LocalDataSourceException([String? message])
       : super(message, 'Local datasource error');
@@ -24,10 +28,6 @@ class LocalDataSourceException extends AppException {
 class EmptyStateException extends AppException {
   EmptyStateException([String? message])
       : super(message, 'Instance of something equal null');
-}
-
-class NetworkException extends AppException {
-  NetworkException([String? message]) : super(message, 'Network Error');
 }
 
 class UnauthorizedException extends AppException {

@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:task_manager_krainet/core/router/router.gr.dart';
 import 'package:task_manager_krainet/domain/entities/task.dart';
+import 'package:task_manager_krainet/shared/theme/colors.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem(
@@ -37,6 +38,7 @@ class TaskListItem extends StatelessWidget {
             Checkbox(
               value: task.isCompleted,
               activeColor: theme.colorScheme.primary,
+              checkColor: AppColors.whiteBackground,
               onChanged: onCheckBoxChanged,
             ),
             const SizedBox(width: 12),

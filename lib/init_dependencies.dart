@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get_it/get_it.dart';
+import 'package:task_manager_krainet/data/datasources/task_remote_data_source.dart';
+import 'package:task_manager_krainet/domain/usecases/count_tasks_by_category.dart';
 import 'package:task_manager_krainet/domain/usecases/delete_task.dart';
+import 'package:task_manager_krainet/domain/usecases/sign_up.dart';
 import 'package:task_manager_krainet/presentation/blocs/auth/auth_bloc.dart';
 import 'package:task_manager_krainet/data/datasources/auth_remote_data_source.dart';
 import 'package:task_manager_krainet/data/datasources/task_local_data_source.dart';
@@ -15,6 +18,7 @@ import 'package:task_manager_krainet/domain/usecases/sign_in.dart';
 import 'package:task_manager_krainet/domain/usecases/update_task.dart';
 import 'package:task_manager_krainet/firebase_options.dart';
 import 'package:task_manager_krainet/core/services/notification_service.dart';
+import 'package:task_manager_krainet/presentation/screens/home/task_count/task_count_bloc.dart';
 import 'package:task_manager_krainet/presentation/screens/add_task/bloc/add_task_bloc.dart';
 import 'package:task_manager_krainet/presentation/screens/task_details/bloc/task_details_bloc.dart';
 import 'package:task_manager_krainet/presentation/screens/tasks/bloc/task_bloc.dart';
@@ -29,10 +33,10 @@ Future<void> initDependencies() async {
   // Initialize notification service
   await NotificationService.instance.init();
 
-  _initAuth();
+  _registerInstances();
 }
 
-void _initAuth() {
+void _registerInstances() {
   serviceLocator
     // Datasources
     ..registerFactory<AuthRemoteDataSource>(
@@ -41,19 +45,25 @@ void _initAuth() {
     ..registerFactory<TaskLocalDataSource>(
       () => TaskLocalDataSourceImpl(),
     )
+    ..registerFactory<TaskRemoteDataSource>(
+      () => TaskRemoteDataSourceImpl(),
+    )
     // Repositories
     ..registerFactory<AuthRepository>(
       () => AuthRepositoryImpl(serviceLocator()),
     )
     ..registerFactory<TaskRepository>(
-      () => TaskRepositoryImpl(serviceLocator()),
+      () => TaskRepositoryImpl(serviceLocator(), serviceLocator()),
     )
     // Usecases
     ..registerFactory(
-      () => SignIn(serviceLocator()),
+      () => SignIn(serviceLocator(), serviceLocator()),
     )
     ..registerFactory(
-      () => LogOut(serviceLocator()),
+      () => LogOut(serviceLocator(), serviceLocator()),
+    )
+    ..registerFactory(
+      () => SignUp(serviceLocator(), serviceLocator()),
     )
     ..registerFactory(
       () => AddTask(serviceLocator()),
@@ -67,9 +77,12 @@ void _initAuth() {
     ..registerFactory(
       () => DeleteTask(serviceLocator()),
     )
+    ..registerFactory(
+      () => CountTasksByCategory(serviceLocator()),
+    )
     // Blocs
     ..registerFactory<AuthBloc>(
-      () => AuthBloc(serviceLocator(), serviceLocator()),
+      () => AuthBloc(serviceLocator(), serviceLocator(), serviceLocator()),
     )
     ..registerLazySingleton(
       () => AddTaskBloc(serviceLocator()),
@@ -79,6 +92,11 @@ void _initAuth() {
       () => TaskBloc(
         getTaskList: serviceLocator(),
         updateTaskUseCase: serviceLocator(),
+      ),
+    )
+    ..registerLazySingleton(
+      () => TaskCountBloc(
+        countTasksByCategory: serviceLocator(),
       ),
     );
 }

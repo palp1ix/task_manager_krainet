@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager_krainet/core/exeptions/exceptions.dart';
 import 'package:task_manager_krainet/core/services/notification_service.dart';
 import 'package:task_manager_krainet/domain/entities/task.dart';
 import 'package:task_manager_krainet/domain/entities/task_category.dart';
@@ -32,13 +34,17 @@ class AddTaskBloc extends Bloc<AddTaskEvent, AddTaskState> {
 
         // Schedule a notification for the task at its due date
         // Only schedule if the task is not already completed
-        if (!task.isCompleted) {
+        if (!task.isCompleted && task.date.isAfter(DateTime.now())) {
           await _notificationService.scheduleTaskNotification(task);
         }
 
         emit(AddTaskSuccess());
       } catch (e) {
-        emit(AddTaskFailed());
+        if (e is UnauthorizedException) {
+          emit(AddTaskFailed(message: 'Вы не вошли в аккаунт!'));
+        } else {
+          emit(AddTaskFailed());
+        }
       }
     });
   }

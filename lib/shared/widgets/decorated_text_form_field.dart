@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:task_manager_krainet/core/constants/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DecoratedTextFormField extends StatelessWidget {
@@ -28,19 +27,33 @@ class DecoratedTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return TextFormField(
       controller: controller,
       keyboardType: keyboardType,
       obscureText: obscureText,
       decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon,
-          border: OutlineInputBorder().copyWith(
-              borderRadius:
-                  BorderRadius.circular(AppConstants.inputBorderRadius))),
+        filled: true,
+        fillColor: theme.colorScheme.surfaceContainer,
+        labelText: labelText,
+        hintText: hintText,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        // Remove all borders but keep the shape
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+      ),
       maxLines: maxLines ?? 1,
       validator: validator ??
           (value) {

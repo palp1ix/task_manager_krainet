@@ -19,6 +19,7 @@ class TaskStatusListener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return BlocListener<AddTaskBloc, AddTaskState>(
       listener: (context, state) {
@@ -32,7 +33,10 @@ class TaskStatusListener extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: AppColors.error,
-              content: Text(localization.errorMessage),
+              content: Text(
+                state.message ?? localization.errorMessage,
+                style: theme.textTheme.bodyMedium,
+              ),
             ),
           );
         } else if (state is AddTaskSuccess) {
