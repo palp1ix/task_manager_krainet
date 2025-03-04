@@ -43,7 +43,7 @@ For this project, a feature-based split (e.g., separating "task creation," "task
 ### Installation
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/taskmanager.git
+   git clone
    cd taskmanager
    ```
 
